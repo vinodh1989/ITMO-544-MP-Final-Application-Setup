@@ -54,7 +54,7 @@
           <div class="form-group">
             <label class="col-md-4 control-label" for="filebutton">Select Image File</label>
             <div class="col-md-4">
-              <input id="filebutton" name="userfile" class="input-file" type="file" accept="image/png, image/jpeg">
+              <input id="filebutton" name="userfile" class="input-file" type="file" accept="image/png, image/jpeg" Required>
             </div>
           </div>
           <!-- Button -->
