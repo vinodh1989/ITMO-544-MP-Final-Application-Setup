@@ -32,7 +32,7 @@ if(!empty($_POST)){
             ]);
 
 		#bucket unique id
-        $bucket = uniqid("ITMO-544-MP2-",false);
+        $bucket = uniqid("ITMO-544-MP-Final-",false);
 
 
 		# To S3 create bucket

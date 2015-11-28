@@ -24,7 +24,7 @@ $link = mysqli_connect($endpoint,"controller","letmein1234","customerrecords", 3
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>ITMO-544-MP2</title>
+  <title>ITMO-544-MP-FINAL</title>
 	<!-- Bootstrap core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -43,7 +43,7 @@ $link = mysqli_connect($endpoint,"controller","letmein1234","customerrecords", 3
           <li role="presentation"><a href="logout.php">Logout</a></li>
         </ul>
       </nav>
-      <h3 class="text-muted">ITMO-544-MP2</h3>
+      <h3 class="text-muted">ITMO-544-MP-FINAL</h3>
     </div>  
 <div class="container">
     <ul class="row">

@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>ITMO-544-MP2</title>
+  <title>ITMO-544-MP-FINAL</title>
 
   <!-- Bootstrap core CSS -->
   <!-- Latest compiled and minified CSS -->
@@ -30,7 +30,7 @@
           <li role="presentation"><a href="logout.php">Logout</a></li>
         </ul>
       </nav>
-      <h3 class="text-muted">ITMO-544-MP2</h3>
+      <h3 class="text-muted">ITMO-544-MP-FINAL</h3>
     </div>
 
     <div class="jumbotron">

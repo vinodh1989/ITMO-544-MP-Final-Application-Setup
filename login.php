@@ -7,7 +7,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>ITMO-544-MP2</title>
+<title>ITMO-544-MP-FINAL</title>
 
 <!-- Bootstrap core CSS -->
 <!-- Latest compiled and minified CSS -->
@@ -27,7 +27,7 @@
 <body>
 <div class="container">
 <div class="header clearfix">
-<h3 class="text-muted text-center">ITMO-544-MP2</h3>
+<h3 class="text-muted text-center">ITMO-544-MP-FINAL</h3>
 </div>
 <?php
 // Start the session

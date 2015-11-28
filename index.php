@@ -8,7 +8,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title>ITMO-544-MP2</title>
+	<title>ITMO-544-MP-FINAL</title>
 
 	<!-- Bootstrap core CSS -->
 	<!-- Latest compiled and minified CSS -->
@@ -28,7 +28,7 @@
 <body>
 	<div class="container">
 		<div class="header clearfix">
-			<h3 class="text-muted text-center">ITMO-544-MP2</h3>
+			<h3 class="text-muted text-center">ITMO-544-MP-FINAL</h3>
 		</div>
 		<div class="container">
 			<div class="row">
@@ -68,13 +68,13 @@
 											<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" Required>
 										</div>
 										<div class="form-group">
+											<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" Required>
+										</div>
+										<div class="form-group">
 											<input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="" Required>
 										</div>
 										<div class="form-group">
-											<input type="phone" name="phone" id="phone" tabindex="1" class="form-control" placeholder="1xxxxxxxxxx" value="" Required>
-										</div>
-										<div class="form-group">
-											<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" Required>
+											<input type="phone" name="phone" id="phone" tabindex="1" class="form-control" placeholder="Phone: 1xxxxxxxxxx" value="" Required>
 										</div>
 										<div class="form-group">
 											<label class="form-group">
