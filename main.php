@@ -1,9 +1,5 @@
 <?php 
 session_start(); 
-if (!defined("true-access"))
-{
-  die("direct cannot access denied");
-}
 ?>
 <html lang="en">
 <head>

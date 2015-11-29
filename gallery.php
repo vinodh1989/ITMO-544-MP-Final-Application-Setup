@@ -1,9 +1,5 @@
 <?php
 session_start();
-if (!defined("true-access"))
-{
-  die("direct cannot access denied");
-}
 
 require 'vendor/autoload.php';
 #create rds client
@@ -50,7 +46,7 @@ $link = mysqli_connect($endpoint,"controller","letmein1234","customerrecords", 3
       <h3 class="text-muted">ITMO-544-MP-FINAL</h3>
     </div>  
 <div class="container">
-    <ul class="row">
+  <ul class="row">
 <?php
 
 // check connection
@@ -83,7 +79,7 @@ if (mysqli_num_rows($result) > 0) {
 }
 else {
     echo '<li><h4 class="text-center muted">Image gallery is empty...!!</h4></li>';
-    echo '<li><h4 class="text-center muted">Goto Home and upload images</h4></li>';
+    echo '<li><h4 class="text-center muted">Goto Login and upload images</h4></li>';
 }
 
 #close db connection

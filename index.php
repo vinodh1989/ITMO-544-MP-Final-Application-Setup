@@ -1,6 +1,5 @@
 <?php 
 session_start();
-define("true-access", true);
 ?>
 <html lang="en">
 <head>

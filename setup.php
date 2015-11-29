@@ -1,10 +1,6 @@
 <?php
 // Start the session
 session_start();
-if (!defined("true-access"))
-{
-  die("direct cannot access denied");
-}
 require 'vendor/autoload.php';
 
 //to create rds client
