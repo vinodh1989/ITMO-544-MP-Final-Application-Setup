@@ -27,7 +27,16 @@ session_start();
     <div class="header clearfix">
       <nav>
         <ul class="nav nav-pills pull-right">
-          <li role="presentation"><a href="main.php">Home</a></li>
+          <?php 
+          if(isset($_SESSION['username']))
+          {
+            echo '<li role="presentation"><a href="main.php">Home</a></li>';
+          }
+          else
+          {
+            echo '<li role="presentation"><a href="index.php">Home</a></li>';
+          }
+          ?>
           <li role="presentation"><a href="gallery.php">Gallery</a></li>
           <li role="presentation"><a href="logout.php">Logout</a></li>
         </ul>

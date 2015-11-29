@@ -2,8 +2,8 @@ $(document).ready(function(){
       
 	$('li img').on('click',function(){
 		var src = $(this).attr('src');
+		src = src.replace(/finishedURL/gi, "rawURL");
 		var img = '<img src="' + src + '" class="img-responsive"/>';
-		
 		//start of new code new code
 		var index = $(this).parent('li').index();   
 		
@@ -30,8 +30,8 @@ $(document).ready(function(){
          
 $(document).on('click', 'a.controls', function(){
 	var index = $(this).attr('href');
-	var src = $('ul.row li:nth-child('+ index +') img').attr('src');             
-	
+	var src = $('ul.row li:nth-child('+ index +') img').attr('src'); 
+	src = src.replace(/finishedURL/gi, "rawURL");	
 	$('.modal-body img').attr('src', src);
 	
 	var newPrevIndex = parseInt(index) - 1; 

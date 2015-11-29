@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 require 'vendor/autoload.php';
 #create rds client
 $rds = new Aws\Rds\RdsClient([
@@ -38,9 +37,20 @@ $link = mysqli_connect($endpoint,"controller","letmein1234","customerrecords", 3
     <div class="header clearfix">
       <nav>
         <ul class="nav nav-pills pull-right">
-          <li role="presentation"><a href="main.php">Home</a></li>
-          <li role="presentation"><a href="gallery.php">Gallery</a></li>
-          <li role="presentation"><a href="logout.php">Logout</a></li>
+          <?php 
+          //to check user login
+          if(isset($_SESSION['username']))
+          {
+            echo '<li role="presentation"><a href="main.php">Home</a></li>';
+            echo '<li role="presentation"><a href="gallery.php">Gallery</a></li>';
+            echo '<li role="presentation"><a href="logout.php">Logout</a></li>';
+          }
+          else
+          {
+            echo '<li role="presentation"><a href="index.php">Home</a></li>';
+            echo '<li role="presentation"><a href="gallery.php">Gallery</a></li>';
+          }
+          ?>
         </ul>
       </nav>
       <h3 class="text-muted">ITMO-544-MP-FINAL</h3>
@@ -72,7 +82,14 @@ if (mysqli_num_rows($result) > 0) {
     // output data of each row
     while($row = mysqli_fetch_assoc($result)) {
     echo '<li class="col-lg-3 col-md-4 col-xs-6">';
-    echo '<img class="img-responsive thumbnail" src="'.$row["RawS3URL"].'">';
+    if(isset($_SESSION['username']))
+    {
+      echo '<img class="img-responsive thumbnail" src="'.$row["FinishedS3URL"].'">';
+    }
+    else
+    {
+      echo '<img class="img-responsive" src="'.$row["RawS3URL"].'">';
+    }
     echo '</li>';
 
     }
