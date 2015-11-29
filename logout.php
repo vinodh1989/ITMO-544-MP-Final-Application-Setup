@@ -32,6 +32,10 @@
 <?php
 // Start the session
 session_start();
+if (!defined("true-access"))
+{
+  die("direct cannot access denied");
+}
 // Include the AWS SDK using the Composer autoloader.
 require 'vendor/autoload.php';
 

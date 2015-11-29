@@ -32,6 +32,10 @@
 <?php
 // Start the session
 session_start();
+if (!defined("true-access"))
+{
+  die("direct cannot access denied");
+}
 // Include the AWS SDK using the Composer autoloader.
 require 'vendor/autoload.php';
 
@@ -174,7 +178,7 @@ echo '<h4 class="text-center text-muted">You have registered successfully..!!</h
 $temp=$_POST['subscription'];
 if(strcmp($temp,"yes") == 0){
 echo '<h4 class="text-center text-muted">You have subscribed for SNS Email Subscription</h4>';
-echo '<h4 class="text-center text-muted">Please confirm you email address</h4>';
+echo '<h4 class="text-center text-muted">Please confirm you email address for SNS Email Subscription</h4>';
 }
 else
 {

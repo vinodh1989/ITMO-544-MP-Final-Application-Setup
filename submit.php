@@ -1,7 +1,10 @@
 <?php
 // Start the session
 session_start();
-
+if (!defined("true-access"))
+{
+  die("direct cannot access denied");
+}
 // Include the AWS SDK using the Composer autoloader.
 require 'vendor/autoload.php';
 
@@ -61,7 +64,7 @@ if(!empty($_POST)){
 
 		# To create thumbnail of image and upload finishedURL file to S3 Bucket
 		$image = new Imagick($uploadfile);
-		$image->thumbnailImage(100,100);
+		$image->thumbnailImage(200,150);
 		$image->writeImage();
 
 		$result = $s3->putObject([
@@ -136,23 +139,24 @@ if(!empty($_POST)){
 		}
 		else
 		{
+
 		//printf("%d Row inserted.\n", $stmt->affected_rows);
 		#create sns client
-			$sns = new Aws\Sns\SnsClient([
-				'version' => 'latest',
-				'region'  => 'us-east-1'
-				]);
+		$sns = new Aws\Sns\SnsClient([
+			'version' => 'latest',
+			'region'  => 'us-east-1'
+			]);
 
 		//to list topic list
-			$result = $sns->listTopics(array(
+		$result = $sns->listTopics(array(
 
-				));
+			));
 		//to get Topic ARN of MP2ImageSubscriptions
-			foreach ($result['Topics'] as $key => $value){
-				if(preg_match("/MP2ImageSubscriptions/", $result['Topics'][$key]['TopicArn'])){
-					$topicARN =$result['Topics'][$key]['TopicArn'];
-				}
-			}	
+		foreach ($result['Topics'] as $key => $value){
+			if(preg_match("/MPFinalImageSubscriptions/", $result['Topics'][$key]['TopicArn'])){
+				$topicARN =$result['Topics'][$key]['TopicArn'];
+			}
+		}	
 		// to publish message
 			$result = $sns->publish(array(
 				'TopicArn' => $topicARN,
@@ -163,23 +167,7 @@ if(!empty($_POST)){
 		}
 
 	#explicit close of prepared statement recommended 
-		$stmt->close();
-
-	/*
-	#select data from  customerrecords tbale
-	$sql1 = "SELECT ID, RawS3URL FROM customerrecords";
-	$result = mysqli_query($link, $sql1);
-
-	if (mysqli_num_rows($result) > 0) {
-		// output data of each row
-		while($row = mysqli_fetch_assoc($result)) {
-			echo "id: " . $row["ID"]."- RawS3URL" . $row["RawS3URL"]. "<br>";
-		}
-	} 
-	else {
-		echo "----0 results";
-	}
-	*/
+	$stmt->close();
 	
 	#close db connection
 	mysqli_close($link);

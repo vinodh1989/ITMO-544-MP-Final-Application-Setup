@@ -1,4 +1,10 @@
-<?php session_start(); ?>
+<?php 
+session_start(); 
+if (!defined("true-access"))
+{
+  die("direct cannot access denied");
+}
+?>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -38,7 +44,7 @@
         <fieldset>
           <?php 
           if(isset($_SESSION['username'])){
-           echo '<h4>Welcome user: '.$_SESSION['username'].'</h4>';
+           echo '<h4>Welcome : '.$_SESSION['username'].'</h4>';
           }
           ?>
           <hr/>

@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!defined("true-access"))
+{
+  die("direct cannot access denied");
+}
 
 require 'vendor/autoload.php';
 #create rds client
@@ -9,8 +13,8 @@ $rds = new Aws\Rds\RdsClient([
 ]);
 
 #DB Instance connection 
-#to get the DBInstances Address
-$result = $rds->describeDBInstances([ 'DBInstanceIdentifier' => 'mp1-vinodh-db']);
+#to get the DBInstances Address of read replica
+$result = $rds->describeDBInstances([ 'DBInstanceIdentifier' => 'mp1-vinodh-db-read-replica']);
 $endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
 $link = mysqli_connect($endpoint,"controller","letmein1234","customerrecords", 3306);
 
