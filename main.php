@@ -51,6 +51,45 @@ session_start();
           if(isset($_SESSION['username'])){
            echo '<h4>Welcome : '.$_SESSION['username'].'</h4>';
           }
+          	#create rds client
+			$rds = new Aws\Rds\RdsClient([
+				'version' => 'latest',
+				'region'  => 'us-east-1'
+				]);
+
+			#DB Instance connection 
+			#to get the DBInstances Address
+			$result = $rds->describeDBInstances([ 'DBInstanceIdentifier' => 'mp1-vinodh-db']);
+			$endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
+			//print "============\n". $endpoint . "================\n";
+
+			#DB CONNECTION SETUP
+			$DB_USERNAME="controller";
+			$DB_PASSWORD="letmein1234";
+			$DB_NAME="customerrecords";
+			$DB_PORT=3306;
+
+			$link = mysqli_connect($endpoint, $DB_USERNAME, $DB_PASSWORD, $DB_NAME, $DB_PORT);
+
+			// check connection
+			if (!$link) {
+				die("Connection failed: " . mysqli_connect_error());
+			}
+			else
+			{
+			#select data from  customerrecords tbale
+			
+			$sql1 = "SELECT * FROM introspectionstatus ORDER BY post_datetime ASC LIMIT 1";
+			$result = mysqli_query($link, $sql1);
+
+				if (mysqli_num_rows($result) > 0) {
+					// output data of each row
+					while($row = mysqli_fetch_assoc($result)) {
+					 echo $row["readOnlyStatus"];
+
+					}
+				}
+			}
           ?>
           <hr/>
           <!-- File size hidden type --> 

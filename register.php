@@ -142,7 +142,7 @@ else
 $stmt->close();
 
 # prepared statement for login
-if (!($stmt1 = $link->prepare("INSERT INTO login(UName,Password) VALUES (?,?)"))) {
+if (!($stmt1 = $link->prepare("INSERT INTO login(UName,Password,Role) VALUES (?,?,?)"))) {
 echo "Prepare failed: (" . $link->errno . ") " . $link->error;
 }
 else
@@ -154,8 +154,9 @@ else
 # insert data
 $uname	   = $_POST['username'];
 $password  = $_POST['password'];
+$role 	   = 0;
 
-if (!$stmt1->bind_param("ss",$uname,$password)) {
+if (!$stmt1->bind_param("ssi",$uname,$password,$role)) {
 echo "Binding parameters failed: (" . $stmt1->errno . ") " . $stmt1->error;
 }
 else 

@@ -8,24 +8,6 @@ $rds = new Aws\Rds\RdsClient([
     'version' => 'latest',
     'region'  => 'us-east-1'
 ]);
-/*
-$result = $rds->createDBInstance([
-        'DBName' => 'customerrecords',
-        'DBInstanceIdentifier' => 'mp1-vinodh-db',
-        'AllocatedStorage' => 10,
-        'DBInstanceClass' => 'db.t2.micro',
-        'Engine' => 'MySQL', // REQUIRED
-        'EngineVersion' => '5.6.23',
-        'MasterUserPassword' => 'letmein1234',
-        'MasterUsername' => 'controller',
-        'PubliclyAccessible' => true,
-        'DBSubnetGroupName' => 'default-vpc-cc25eaa8'
-]);
-
-print "Create RDS DB results: \n";
-
-$result = $rds->waitUntil('DBInstanceAvailable', ['DBInstanceIdentifier' => 'mp1-vinodh-db']);
-*/
 
 #DB Instance connection 
 #to get the DBInstances Address
@@ -84,10 +66,12 @@ if(!mysqli_query($link, $sql3)) {
 }
 
 // sql to create login table
+// role 1- admin | 0 - user
 $sql4 = "CREATE TABLE login (
 ID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
 UName VARCHAR(50) NOT NULL,
-Password VARCHAR(50) NOT NULL
+Password VARCHAR(50) NOT NULL,
+Role INT(1) NOT NULL 
 )";
 
 if (mysqli_query($link, $sql4)) {
@@ -118,6 +102,22 @@ DateTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
 if (mysqli_query($link, $sql6)) {
     echo "Table customerrecords created successfully";
+} 
+else 
+{
+    echo "Error creating table: " . mysqli_error($link);
+}
+
+// sql to create  introspectionStatus table
+$sql7 = "CREATE TABLE introspectionstatus (
+ID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
+backupS3URL VARCHAR(256),
+readOnlyStatus INT(1) NOT NULL,
+DateTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)";
+
+if (mysqli_query($link, $sql7)) {
+    echo "Table introspectionstatus created successfully";
 } 
 else 
 {
