@@ -1,6 +1,7 @@
 <?php
 // Start the session
 session_start();
+date_default_timezone_set('America/Chicago');
 // Include the AWS SDK using the Composer autoloader.
 require 'vendor/autoload.php';
 
@@ -21,6 +22,8 @@ if(!empty($_POST)){
 		var_dump($uploadfile);
 		print_r($_FILES);
 		echo "</pre>";
+		$expirydate = gmdate("D, d M Y H:i:s T");
+		echo $expirydate;
 
 		#use Aws\S3\S3Client;
 		## create S3 client 
@@ -30,7 +33,7 @@ if(!empty($_POST)){
 			]);
 
 		#bucket unique id
-		$bucket = uniqid("ITMO-544-MP-Final-",false);
+		$bucket = uniqid("ITMO-544-MP-Final-test-",false);
 
 
 		# To S3 create bucket
@@ -40,7 +43,7 @@ if(!empty($_POST)){
 			]);
 
 		$result = $s3->waitUntil('BucketExists', array('Bucket' => $bucket));
-
+		
 		echo "-----------------------------------------\n";
 		# To upload rawURL file to S3 Bucket
 
@@ -49,14 +52,13 @@ if(!empty($_POST)){
 			'Bucket' => $bucket,
 			'Key'    => "rawURL".$uploadfile,
 			'ContentType' => $_FILES['userfile']['type'],
-			'Body'   => fopen($uploadfile, 'r+')
+			'Body'   => fopen($uploadfile, 'r+'),
 			]);
 
 		$rawURL = $result['ObjectURL'];
 		echo $rawURL;
 		echo "---------------Raw S3 URL bucket";
 		echo "-----------------------------------------\n"; 
-
 
 		# To create thumbnail of image and upload finishedURL file to S3 Bucket
 		$image = new Imagick($uploadfile);
@@ -68,7 +70,7 @@ if(!empty($_POST)){
 			'Bucket' => $bucket,
 			'Key'    => "finishedURL".$uploadfile,
 			'ContentType' => $_FILES['userfile']['type'],
-			'Body'   => fopen($uploadfile, 'r+')
+			'Body'   => fopen($uploadfile, 'r+'),
 			]);
 
 		$finishedURL = $result['ObjectURL'];
@@ -77,6 +79,28 @@ if(!empty($_POST)){
 		echo "-----------------------------------------\n"; 
 
 	}
+	
+	#to add expiration date for s3 bucket objects
+	$result = $s3->putBucketLifecycleConfiguration([
+		'Bucket' => $bucket, // REQUIRED
+		'LifecycleConfiguration' => [
+			'Rules' => [ // REQUIRED
+			[
+			'Expiration' => [
+
+			'Days' => 1,
+			],	
+			'NoncurrentVersionExpiration' => [
+			'NoncurrentDays' => 1,
+			],
+
+				'Prefix' => '', // REQUIRED
+				'Status' => 'Enabled', // REQUIRED
+
+				],
+			],
+		],
+	]);
 
 	#create rds client
 	$rds = new Aws\Rds\RdsClient([
@@ -138,21 +162,21 @@ if(!empty($_POST)){
 
 		//printf("%d Row inserted.\n", $stmt->affected_rows);
 		#create sns client
-		$sns = new Aws\Sns\SnsClient([
-			'version' => 'latest',
-			'region'  => 'us-east-1'
-			]);
+			$sns = new Aws\Sns\SnsClient([
+				'version' => 'latest',
+				'region'  => 'us-east-1'
+				]);
 
 		//to list topic list
-		$result = $sns->listTopics(array(
+			$result = $sns->listTopics(array(
 
-			));
+				));
 		//to get Topic ARN of MP2ImageSubscriptions
-		foreach ($result['Topics'] as $key => $value){
-			if(preg_match("/MPFinalImageSubscriptions/", $result['Topics'][$key]['TopicArn'])){
-				$topicARN =$result['Topics'][$key]['TopicArn'];
-			}
-		}	
+			foreach ($result['Topics'] as $key => $value){
+				if(preg_match("/MPFinalImageSubscriptions/", $result['Topics'][$key]['TopicArn'])){
+					$topicARN =$result['Topics'][$key]['TopicArn'];
+				}
+			}	
 		// to publish message
 			$result = $sns->publish(array(
 				'TopicArn' => $topicARN,
@@ -163,21 +187,21 @@ if(!empty($_POST)){
 		}
 
 	#explicit close of prepared statement recommended 
-	$stmt->close();
-	
+		$stmt->close();
+		
 	#close db connection
-	mysqli_close($link);
-	
+		mysqli_close($link);
+		
 	//function to redirect
-	function redirect($url, $statusCode = 303)
-	{
-		header('Location: ' . $url, true, $statusCode);
-		die();
-	}
+		function redirect($url, $statusCode = 303)
+		{
+			header('Location: ' . $url, true, $statusCode);
+			die();
+		}
 
-	$url	= "gallery.php";
-	redirect($url);
-}
+		$url	= "gallery.php";
+		redirect($url);
+	}
 
 }
 else {
