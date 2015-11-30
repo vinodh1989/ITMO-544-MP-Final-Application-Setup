@@ -73,18 +73,21 @@ function redirect($url, $statusCode = 303)
 
 #select data from  customerrecords tbale
 $UName = $_POST['username'];
-$sql1 = "SELECT UName, Password FROM login WHERE UName ='$UName'";
+$sql1 = "SELECT UName, Password, Role FROM login WHERE UName ='$UName'";
 $result1 = mysqli_query($link, $sql1);
 
 if (mysqli_num_rows($result1) > 0) {
+ 	$row = mysqli_fetch_assoc($result1);
+	$_SESSION['userrole'] = $row['Role'];
+	
 	$sql2 = "SELECT Email FROM customer WHERE UName ='$UName'";
 	$result2 = mysqli_query($link, $sql2);
 
 	if (mysqli_num_rows($result2) > 0) {
-	    $row = mysqli_fetch_assoc($result2);
+	    $row1 = mysqli_fetch_assoc($result2);
 	    
 		$_SESSION['username'] = $_POST['username'];
-		$_SESSION['email'] = $row['Email'];
+		$_SESSION['email'] = $row1['Email'];
 		$url = "main.php";
 		redirect($url);
 	}

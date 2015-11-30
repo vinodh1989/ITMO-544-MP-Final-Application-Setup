@@ -58,6 +58,38 @@ else
     echo "Error creating table: " . mysqli_error($link);
 }
 
+//to insert data into customer table
+# prepared statement
+if(!($stmt = $link->prepare("INSERT INTO customer(UName,Email,PhoneForSMS,SubscriptionStatus,TopicARN) VALUES (?,?,?,?,?)"))) {
+	echo "Prepare failed: (" . $link->errno . ") " . $link->error;
+}
+else
+{
+	echo "----Prepare success";
+}
+
+# bind and execute 
+# insert data
+$uname         		= 'admin';
+$email         		= 'vsadayam@hawk.iit.edu';
+$phone         		= '13126477593';
+$subscriptionStatus	= 0;
+$topicARN			= '';
+
+if (!$stmt->bind_param("sssis",$uname,$email,$phone,$subscriptionStatus,$topicARN)) {
+echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+}
+else 
+{
+//echo "----Binding parameters success";
+}
+
+if (!$stmt->execute()) {
+echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+}
+
+
+
 #drop login table if exists
 $sql3 = "DROP TABLE IF EXISTS login";
 
@@ -80,6 +112,34 @@ if (mysqli_query($link, $sql4)) {
 else 
 {
     echo "Error creating table: " . mysqli_error($link);
+}
+
+//to insert data into login table
+# prepared statement
+if (!($stmt = $link->prepare("INSERT INTO login(UName,Password,Role) VALUES (?,?,?)"))) {
+	echo "Prepare failed: (" . $link->errno . ") " . $link->error;
+}
+else
+{
+	echo "----Prepare success";
+}
+
+# bind and execute 
+# insert data
+$Uname    = 'admin';
+$Password = 'admin';
+$Role	  = 1;
+
+if (!$stmt->bind_param("ssi",$Uname,$Password,$Role)) {
+	echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+}
+else 
+{
+	echo "----Binding parameters success";
+}
+
+if (!$stmt->execute()) {
+	echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 }
 
 #drop customerrecords table if exists

@@ -44,46 +44,60 @@ session_start();
       <h3 class="text-muted">ITMO-544-MP-FINAL</h3>
     </div>
     <div class="jumbotron">
-        <form class="form-horizontal" enctype="multipart/form-data" action="introspection-submit.php" method="POST">
-        <fieldset>
-        <?php 
-          if(isset($_SESSION['username'])){
-           echo '<h4>Welcome : '.$_SESSION['username'].'</h4>';
-          }
-          ?>
-          <hr/>
-          <!-- Back Up option-->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="backupdb">Backup Database</label>  
-            <div class="col-md-5">
-			<input type="radio" name="backupdb" value="yes" tabindex="2" checked>
-			<span class="text-muted"> Yes</span>
-			<input type="radio" name="backupdb" value="no" tabindex="2">
-			<span class="text-muted">No</span>
-            </div>
-          </div>
+	<form class="form-horizontal" enctype="multipart/form-data" action="introspection-submit.php" method="POST">
+		<fieldset>
+			<?php 
+			if(isset($_SESSION['username'])){
+				echo '<h4>Welcome : '.$_SESSION['username'].'</h4>';
+			}
 
-          <!-- Disable Image Upload-->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="disableimgupload">Disable Image Upload</label>  
-            <div class="col-md-5">
-			<input type="radio" name="disableimgupload" value="yes" tabindex="2">
-			<span class="text-muted"> Yes</span>
-			<input type="radio" name="disableimgupload" value="no" tabindex="2" checked>
-			<span class="text-muted">No</span>
-            </div>
-          </div>
-          
-          <!-- Button -->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="submit"></label>
-            <div class="col-md-4">
-              <button id="submit" name="submit" class="btn btn-primary btn-xs">Submit</button>
-            </div>
-          </div>
+			if(isset($_SESSION['userrole']))
+			{
+				if($_SESSION['userrole'] == 0)
+				{
+				echo '<h4>Only admin have access to this page...!!!</h4>';
+				echo '<h4>Login as Admin.</h4>';
+				echo '<div class="text-center"><a href="main.php" class="btn btn-primary btn-lg">Back to Home</a><div>';
+				}	
+				else
+				{
+			?>
+			<hr/>
+			<!-- Back Up option-->
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="backupdb">Backup Database</label>  
+				<div class="col-md-5">
+				<input type="radio" name="backupdb" value="yes" tabindex="2" checked>
+				<span class="text-muted"> Yes</span>
+				<input type="radio" name="backupdb" value="no" tabindex="2">
+				<span class="text-muted">No</span>
+				</div>
+			</div>
 
-        </fieldset>
-      </form>
+			<!-- Disable Image Upload-->
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="disableimgupload">Disable Image Upload</label>  
+				<div class="col-md-5">
+				<input type="radio" name="disableimgupload" value="yes" tabindex="2">
+				<span class="text-muted"> Yes</span>
+				<input type="radio" name="disableimgupload" value="no" tabindex="2" checked>
+				<span class="text-muted">No</span>
+				</div>
+			</div>
+
+			<!-- Button -->
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="submit"></label>
+				<div class="col-md-4">
+				<button id="submit" name="submit" class="btn btn-primary btn-xs">Submit</button>
+				</div>
+			</div>
+			<?php 
+				}
+			}
+			?>  	
+			</fieldset>
+		</form>
     </div>
     <footer class="footer text-center">
       <p>&copy;  by Vinodh Kannan</p>

@@ -1,5 +1,8 @@
 <?php 
-session_start(); 
+// Start the session
+session_start();
+// Include the AWS SDK using the Composer autoloader.
+require 'vendor/autoload.php'; 
 ?>
 <html lang="en">
 <head>
@@ -38,6 +41,7 @@ session_start();
           }
           ?>
           <li role="presentation"><a href="gallery.php">Gallery</a></li>
+          <li role="presentation"><a href="introspection-form.php">BackUpDB</a></li>
           <li role="presentation"><a href="logout.php">Logout</a></li>
         </ul>
       </nav>
@@ -48,9 +52,10 @@ session_start();
       <form class="form-horizontal" enctype="multipart/form-data" action="submit.php" method="POST">
         <fieldset>
           <?php 
-          if(isset($_SESSION['username'])){
-           echo '<h4>Welcome : '.$_SESSION['username'].'</h4>';
-          }
+          	if(isset($_SESSION['username'])){
+           		echo '<h4>Welcome : '.$_SESSION['username'].'</h4>';
+           	}
+           	
           	#create rds client
 			$rds = new Aws\Rds\RdsClient([
 				'version' => 'latest',
@@ -61,7 +66,6 @@ session_start();
 			#to get the DBInstances Address
 			$result = $rds->describeDBInstances([ 'DBInstanceIdentifier' => 'mp1-vinodh-db']);
 			$endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
-			//print "============\n". $endpoint . "================\n";
 
 			#DB CONNECTION SETUP
 			$DB_USERNAME="controller";
@@ -77,19 +81,30 @@ session_start();
 			}
 			else
 			{
-			#select data from  customerrecords tbale
+			#select data from  introspectionstatus tbale
 			
-			$sql1 = "SELECT * FROM introspectionstatus ORDER BY post_datetime ASC LIMIT 1";
+			$sql1 = "SELECT * FROM introspectionstatus ORDER BY DateTime DESC LIMIT 1";
 			$result = mysqli_query($link, $sql1);
 
 				if (mysqli_num_rows($result) > 0) {
 					// output data of each row
 					while($row = mysqli_fetch_assoc($result)) {
-					 echo $row["readOnlyStatus"];
-
+					 $readOnlyStatus = $row["readOnlyStatus"]; //image upload disabled
 					}
 				}
+				else
+				{
+				  	$readOnlyStatus = 0; //image upload enabled
+				}
 			}
+          ?>
+          <?php 
+          	if($readOnlyStatus == 1){
+           		echo '<h4>Currently, image upload option is disbaled...!!!</h4>';
+           		echo '<h4>You can view only gallery</h4>';
+           	}
+           	else
+           	{
           ?>
           <hr/>
           <!-- File size hidden type --> 
@@ -114,6 +129,9 @@ session_start();
               <button id="submit" name="submit" class="btn btn-primary btn-xs">Submit</button>
             </div>
           </div>
+          <?php 
+          	}
+          ?>
         </fieldset>
       </form>
     </div>

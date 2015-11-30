@@ -44,7 +44,6 @@ session_start();
     <div class="jumbotron text-center" >
         <p><a href="login-register.php" class="btn btn-primary btn-custom"><span class="glyphicon glyphicon-user"></span> Login / Register</a></p>
         <p><a href="gallery.php" class="btn btn-primary btn-custom"><span class="glyphicon glyphicon-th-large"></span> View gallery </a></p>
-        <p><a href="introspection.php" class="btn btn-primary btn-custom"><span class="glyphicon glyphicon-download-alt"></span> Backup Database</a></p>
     </div>
     <footer class="footer text-center">
       <p>&copy;  by Vinodh Kannan</p>

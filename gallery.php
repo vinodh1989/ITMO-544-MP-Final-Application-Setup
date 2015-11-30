@@ -48,7 +48,7 @@ $link = mysqli_connect($endpoint,"controller","letmein1234","customerrecords", 3
           else
           {
             echo '<li role="presentation"><a href="index.php">Home</a></li>';
-            echo '<li role="presentation"><a href="gallery.php">Gallery</a></li>';
+            echo '<li role="presentation"><a href="login-register.php">Login/Register</a></li>';
           }
           ?>
         </ul>

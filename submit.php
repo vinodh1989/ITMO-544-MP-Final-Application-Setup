@@ -116,7 +116,7 @@ if(!empty($_POST)){
 
 	# bind and execute 
 	# insert data
-		$email         = $_SESSION['username'];
+		$email         = $_SESSION['email'];
 		$s3rawurl      = $rawURL;
 		$s3finishedurl = $finishedURL;
 		$filename      = basename($_FILES['userfile']['name']);
